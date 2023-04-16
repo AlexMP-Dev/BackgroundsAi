@@ -1,4 +1,4 @@
-import 'package:backgroundsai/counter/counter.dart';
+import 'package:backgroundsai/gallery/gallery.dart';
 import 'package:backgroundsai/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      home: const HomePage(),
     );
   }
 }
