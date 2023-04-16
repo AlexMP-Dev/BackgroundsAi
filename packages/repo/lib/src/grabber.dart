@@ -31,15 +31,15 @@ class Grabber {
     }
   }
 
-  Future<List<String>> getImagesLexica() {
+  Future<List<String>> fetchjImgLexica() {
     return _getImages(_imgslexica, _matchlexica);
   }
 
-  Future<List<String>> getImgRecentMidjurney() {
+  Future<List<String>> fetchImgRecMid() {
     return _getImages(_recentImgMidjurney, _matchmid);
   }
 
-  Future<List<String>> getImgTopMidjurney() {
+  Future<List<String>> fetchImgTopMid() {
     return _getImages(_topImgMidjurney, _matchmid);
   }
 }
