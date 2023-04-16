@@ -1,4 +1,4 @@
 /// repo
 library repo;
 
-export 'src/repo.dart';
+export 'src/grabber.dart';
