@@ -35,4 +35,10 @@ class GalleryCubit extends Cubit<GalleryState> {
     }
     emit(state.copyWith(imagesFav: fav));
   }
+
+
+  //is faborite
+  bool isFavorite(String img) {
+    return state.imagesFav.containsKey(img);
+  }
 }
