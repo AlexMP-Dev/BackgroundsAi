@@ -30,28 +30,40 @@ class ImageCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             child: Stack(
               children: [
-                CachedNetworkImage(
-                  imageUrl: url!,
-                  errorWidget: (context, url, error) {
-                    if (error != null) {
-                      return const SizedBox();
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                  placeholder: (context, url) => const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
+                GestureDetector(
+                  onTap: () {
+                    //navigate to fullscreen
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => FullScreen(
+                          url: url!,
+                        ),
                       ),
-                    ),
-                  ),
-                  imageBuilder: (context, imageProvider) {
-                    return Image(
-                      image: imageProvider,
                     );
                   },
+                  child: CachedNetworkImage(
+                    imageUrl: url!,
+                    errorWidget: (context, url, error) {
+                      if (error != null) {
+                        return const SizedBox();
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                    placeholder: (context, url) => const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    imageBuilder: (context, imageProvider) {
+                      return Image(
+                        image: imageProvider,
+                      );
+                    },
+                  ),
                 ),
                 Positioned(
                   bottom: 0,
