@@ -1,10 +1,10 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:repo/repo.dart';
 
 part 'gallery_state.dart';
 
-class GalleryCubit extends Cubit<GalleryState> {
+class GalleryCubit extends HydratedCubit<GalleryState> {
   GalleryCubit({required this.grabber}) : super(const GalleryState());
   final Grabber grabber;
 
@@ -36,9 +36,23 @@ class GalleryCubit extends Cubit<GalleryState> {
     emit(state.copyWith(imagesFav: fav));
   }
 
-
   //is faborite
   bool isFavorite(String img) {
     return state.imagesFav.containsKey(img);
+  }
+
+  @override
+  GalleryState? fromJson(Map<String, dynamic> json) {
+    //hydrated favoritos
+    return GalleryState(
+      imagesFav: Map<String, int>.from(json['imagesFav'] as Map),
+    );
+  }
+
+  @override
+  Map<String, dynamic>? toJson(GalleryState state) {
+    return {
+      'imagesFav': state.imagesFav,
+    };
   }
 }

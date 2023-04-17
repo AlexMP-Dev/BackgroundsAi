@@ -21,7 +21,7 @@ class FavoritePage extends StatelessWidget {
             itemCount: sorted.length,
             itemBuilder: (context, index) {
               return ImageCard(url: sorted[index].key);
-            });
+            },);
     return Scaffold(backgroundColor: Colors.black, body: body);
   }
 }

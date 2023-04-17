@@ -11,63 +11,64 @@ class ImageCard extends StatelessWidget {
     final isfavorite = context.select(
       (GalleryCubit cubit) => cubit.isFavorite(url!),
     );
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3),
-            )
-          ],
-        ),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                fit: BoxFit.contain,
-                imageUrl: url!,
-                errorWidget: (context, url, error) {
-                  if (error != null) {
-                    return const SizedBox();
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-                placeholder: (context, url) => const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              )
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Stack(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: url!,
+                  errorWidget: (context, url, error) {
+                    if (error != null) {
+                      return const SizedBox();
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                  placeholder: (context, url) => const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  imageBuilder: (context, imageProvider) {
+                    return Image(
+                      image: imageProvider,
+                    );
+                  },
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: IconButton(
+                    onPressed: () {
+                      context.read<GalleryCubit>().addToFav(url!);
+                    },
+                    icon: Icon(
+                      isfavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isfavorite ? Colors.red : Colors.white,
                     ),
                   ),
                 ),
-                imageBuilder: (context, imageProvider) {
-                  return Image(
-                    image: imageProvider,
-                  );
-                },
-              ),
+              ],
             ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: IconButton(
-                onPressed: () {
-                  context.read<GalleryCubit>().addToFav(url!);
-                },
-                icon: Icon(
-                  isfavorite ? Icons.favorite : Icons.favorite_border,
-                  color: isfavorite ? Colors.red : Colors.white,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -1,15 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart' as html;
+
 import 'package:http/http.dart' as http;
 
-// class to colect images from lexica.art
 class Grabber {
-  //top images endpoint
-  static const String _imgslexica = 'https://lexica.art/';
-  static const String _matchlexica = 'https://image.lexica.art/md2/.*?"';
-
   //recent and top images endpoint from midjurney
   static const String _recentImgMidjurney =
       'https://www.midjourney.com/showcase/recent/';
@@ -26,7 +19,8 @@ class Grabber {
       //id\":\"69eb5d51-3c79-46c0-ad47-d694e9ca46ef\"
       final sub1 = response.body.substring(29462, response.body.length - 10);
       final exp = RegExp(
-          '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}).*?"');
+        '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}).*?"',
+      );
       final ids = exp.allMatches(sub1);
       final ids2 = ids.map((match) => match.group(0)).toList();
       final lista = <String>[];
@@ -36,9 +30,7 @@ class Grabber {
       final lista2 = <String>[];
       for (var i = 0; i < lista.length; i++) {
         if (i.isEven) {
-          
-            lista2.add('https://image.lexica.art/md2/${lista[i]}');
-          
+          lista2.add('https://image.lexica.art/md2/${lista[i]}');
         }
       }
       debugPrint(lista2.length.toString());
