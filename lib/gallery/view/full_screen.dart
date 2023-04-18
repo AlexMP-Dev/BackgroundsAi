@@ -7,7 +7,7 @@ class FullScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 18, 18, 18),
       appBar: AppBar(
         backgroundColor: Colors.black,
       ),

@@ -1,3 +1,4 @@
+import 'package:backgroundsai/gallery/gallery.dart';
 import 'package:backgroundsai/widgets/image_card.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,16 @@ class ImageList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: lista!.length,
         itemBuilder: (context, index) {
-          return ImageCard(url: lista![index]);
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => FullScreen(url: lista![index]),
+                ),
+              );
+            },
+            child: ImageCard(url: lista![index]),
+          );
         },
       ),
     );
