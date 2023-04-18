@@ -15,7 +15,7 @@ class _SlideShowState extends State<SlideShow> {
     viewportFraction: 0.8,
   );
 
-  final hidecontrolsafterseconds = 1;
+  final hidecontrolsafterseconds = 4;
 
   DateTime lasInteraction = DateTime.now();
 
@@ -35,29 +35,25 @@ class _SlideShowState extends State<SlideShow> {
     });
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 18, 18, 18),
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          hidecontrols = false;
+          lasInteraction = DateTime.now();
+        });
+      },
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 18, 18, 18),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+        ),
 
-      //body with pageview and imagecards from list
-      body: GestureDetector(
-        onTap: () {
-          setState(() {
-            hidecontrols = false;
-            lasInteraction = DateTime.now();
-          });
-        },
-        child: Stack(
+        //body with pageview and imagecards from list
+        body: Stack(
           children: [
             PageView.builder(
               controller: controller,
@@ -65,7 +61,10 @@ class _SlideShowState extends State<SlideShow> {
                 return ImageCard(url: widget.urls[index % widget.urls.length]);
               },
               onPageChanged: (value) {
-                debugPrint(value.toString());
+                setState(() {
+                  hidecontrols = false;
+                  lasInteraction = DateTime.now();
+                });
               },
             ),
             Positioned(
@@ -83,8 +82,10 @@ class _SlideShowState extends State<SlideShow> {
                       curve: Curves.bounceInOut,
                     );
                   },
-                  child: const Icon(Icons.arrow_back_outlined,
-                      color: Colors.white),
+                  child: const Icon(
+                    Icons.arrow_back_outlined,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -115,5 +116,11 @@ class _SlideShowState extends State<SlideShow> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

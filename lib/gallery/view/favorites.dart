@@ -16,7 +16,12 @@ class FavoritePage extends StatelessWidget {
         (a, b) => b.key.compareTo(a.key),
       );
     final body = sorted.isEmpty
-        ? const Center(child: Text('No Favorites'))
+        ? const Center(
+            child: Text(
+              'No Favorites',
+              style: TextStyle(color: Colors.white, fontSize: 25),
+            ),
+          )
         : ListView.builder(
             itemCount: sorted.length,
             itemBuilder: (context, index) {

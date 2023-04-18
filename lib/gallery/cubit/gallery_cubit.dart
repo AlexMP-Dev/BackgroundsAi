@@ -1,6 +1,9 @@
+import 'package:cross_file/cross_file.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:repo/repo.dart';
+import 'package:share_plus/share_plus.dart';
 
 part 'gallery_state.dart';
 
@@ -54,5 +57,19 @@ class GalleryCubit extends HydratedCubit<GalleryState> {
     return {
       'imagesFav': state.imagesFav,
     };
+  }
+
+  Future<void> shareImage(String img, int index) async {
+    //share link if index = 0
+    if (index == 0) {
+      await Share.share(img);
+    }
+    if (index == 1) {
+      final byteData = await NetworkAssetBundle(Uri.parse(img)).load(img);
+      final bytes = byteData.buffer.asUint8List();
+      final name = img.split('/').last;
+      final file = XFile.fromData(bytes, name: name, mimeType: 'image/png');
+      await Share.shareXFiles([file]);
+    }
   }
 }
